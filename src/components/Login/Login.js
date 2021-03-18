@@ -1,7 +1,8 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.config';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from "../../App";
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -17,6 +18,8 @@ function Login() {
         password: '',
         photo: ''
     })
+
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
     const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -103,6 +106,7 @@ function Login() {
                     newUserInfo.error = '';
                     newUserInfo.success = true;
                     setUser(newUserInfo);
+                    setLoggedInUser(newUserInfo);
                     console.log('sign in user info', response.user);
                 })
                 .catch((error) => {

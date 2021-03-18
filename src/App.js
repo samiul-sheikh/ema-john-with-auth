@@ -15,10 +15,17 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
+import { createContext, useState } from 'react';
 
-function App() {
+export const UserContext = createContext();
+
+function App(props) {
+
+    const [loggedInUser, setLoggedInUser] = useState({});
+
     return (
-        <div>
+        <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+            <h3>e-mail: {loggedInUser.email}</h3>
             <Header></Header>
             <Router>
                 <Switch>
@@ -48,7 +55,7 @@ function App() {
                     </Route>
                 </Switch>
             </Router>
-        </div>
+        </UserContext.Provider>
     );
 }
 
